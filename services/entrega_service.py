@@ -1,5 +1,6 @@
+from itertools import combinations
+
 def processar_entregas(conexoes, entregas):
-    # Construir a matriz de conexões
     matriz_conexoes = {}
     for origem, destino, tempo in conexoes:
         if origem not in matriz_conexoes:
@@ -12,7 +13,6 @@ def processar_entregas(conexoes, entregas):
     def calcular_tempo_viagem(origem, destino):
         if destino in matriz_conexoes[origem]:
             return matriz_conexoes[origem][destino]
-        # Se não houver conexão direta, encontrar o caminho mais curto
         caminho = encontrar_caminho_mais_curto(matriz_conexoes, origem, destino)
         if not caminho:
             return float('inf')
@@ -35,38 +35,44 @@ def processar_entregas(conexoes, entregas):
                         fila.append((proximo, caminho + [proximo]))
         return None
 
-    def avaliar_entrega(entrega):
+    def avaliar_entrega(entrega, tempo_atual):
         tempo_inicio, destino, bonus = entrega
+        if tempo_inicio < tempo_atual:
+            return None
         tempo_viagem = calcular_tempo_viagem('A', destino)
         tempo_retorno = calcular_tempo_viagem(destino, 'A')
-        tempo_total = tempo_viagem + tempo_retorno
+        tempo_total = max(tempo_inicio - tempo_atual, 0) + tempo_viagem + tempo_retorno
         return {
             'entrega': entrega,
             'tempo_viagem': tempo_viagem,
             'tempo_retorno': tempo_retorno,
             'tempo_total': tempo_total,
-            'lucro': bonus
+            'lucro': bonus,
+            'tempo_fim': tempo_atual + tempo_total
         }
 
-    def encontrar_melhor_entrega():
-        melhor_entrega = None
+    def encontrar_melhor_combinacao():
+        melhor_combinacao = []
         maior_lucro = 0
-        for entrega in entregas:
-            avaliacao = avaliar_entrega(entrega)
-            if avaliacao['lucro'] > maior_lucro:
-                maior_lucro = avaliacao['lucro']
-                melhor_entrega = avaliacao
-        return melhor_entrega
+        for i in range(1, len(entregas) + 1):
+            for combo in combinations(entregas, i):
+                tempo_atual = 0
+                lucro_total = 0
+                entregas_validas = []
+                for entrega in combo:
+                    avaliacao = avaliar_entrega(entrega, tempo_atual)
+                    if avaliacao:
+                        lucro_total += avaliacao['lucro']
+                        tempo_atual = avaliacao['tempo_fim']
+                        entregas_validas.append(avaliacao['entrega'])
+                if lucro_total > maior_lucro:
+                    maior_lucro = lucro_total
+                    melhor_combinacao = entregas_validas
+        return melhor_combinacao, maior_lucro
 
-    melhor_entrega = encontrar_melhor_entrega()
+    melhor_combinacao, lucro_total = encontrar_melhor_combinacao()
 
-    if melhor_entrega:
-        return {
-            "entregas_realizadas": [melhor_entrega['entrega']],
-            "lucro_total": melhor_entrega['lucro']
-        }
-    else:
-        return {
-            "entregas_realizadas": [],
-            "lucro_total": 0
-        }
+    return {
+        "entregas_realizadas": melhor_combinacao,
+        "lucro_total": lucro_total
+    }
