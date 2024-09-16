@@ -42,9 +42,9 @@ Este projeto é uma API FastAPI para processar entregas e calcular o melhor lucr
 
 Para iniciar o servidor da API, execute:
 
-    ```
-    python main.py
-    ```
+```
+python main.py
+```
 
 A API estará disponível em `http://localhost:8000`.
 
