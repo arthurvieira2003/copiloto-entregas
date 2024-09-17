@@ -10,3 +10,7 @@ annotated-types==0.7.0
 idna==3.10
 h11==0.14.0
 click==8.1.7
+streamlit==1.22.0
+matplotlib==3.7.1
+pandas==2.0.1
+networkx==3.1

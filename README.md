@@ -1,6 +1,6 @@
 # API de Processamento de Entregas
 
-Este projeto é uma API FastAPI para processar entregas e calcular o melhor lucro.
+Este projeto é uma API FastAPI para processar entregas e calcular o melhor lucro, além de incluir ferramentas de visualização e análise de dados.
 
 ## Requisitos
 
@@ -97,6 +97,36 @@ Exemplo de resposta:
 }
 ```
 
+## Ferramentas de Visualização
+
+### Gráficos Comparativos
+
+Para executar a ferramenta de gráficos comparativos, use o seguinte comando:
+
+```
+streamlit run graficos_comparativos.py
+```
+
+Esta ferramenta gera visualizações comparativas das entregas, incluindo:
+
+- Gráfico de barras: Bônus por Destino
+- Gráfico de dispersão: Tempo de Início vs Bônus
+- Gráfico de pizza: Distribuição de Bônus por Destino
+
+### Simulação Visual
+
+Para executar a ferramenta de simulação visual, use o seguinte comando:
+
+```
+streamlit run simulacao_visual.py
+```
+
+Esta ferramenta permite:
+
+- Configurar conexões e entregas interativamente
+- Visualizar o mapa de conexões como um grafo
+- Processar entregas e exibir resultados em tempo real
+
 ## Desenvolvimento
 
-O código principal da API está localizado em `main.py`. A lógica de processamento de entregas está em `services/entrega_service.py`.
+O código principal da API está localizado em `main.py`. A lógica de processamento de entregas está em `services/entrega_service.py`. As ferramentas de visualização estão em `graficos_comparativos.py` e `simulacao_visual.py`.
