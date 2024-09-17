@@ -2,6 +2,8 @@
 
 Este projeto é uma API FastAPI para processar entregas e calcular o melhor lucro, além de incluir ferramentas de visualização e análise de dados.
 
+Desenmvolvedores: Arthur Henrique Tscha Vieira, Marco Leone Merini e Rafael Rodrigues Ferreira de Andrade
+
 ## Requisitos
 
 - Python 3.8+
